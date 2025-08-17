@@ -26,4 +26,4 @@ EXPOSE 8080
 # 1) יצירת תיקיית ה-DB אם אינה קיימת
 # 2) החלת הסכימה על קובץ ה-DB ב-PVC
 # 3) הפעלת שרת ה-API (FastAPI) עם Uvicorn
-CMD ["/bin/sh","-c","mkdir -p \"$(dirname \\\"$DB_PATH\\\")\" && sqlite3 \"$DB_PATH\" < /app/create.sql && exec uvicorn main:app --host 0.0.0.0 --port 8080"]
+CMD ["sh","-c","DBP=${DB_PATH:-/data/app.db}; DB_DIR=$(dirname $DBP); mkdir -p $DB_DIR; sqlite3 $DBP < /app/create.sql; exec uvicorn main:app --host 0.0.0.0 --port 8080"]
